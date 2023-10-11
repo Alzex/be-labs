@@ -4,6 +4,11 @@ This project runs on NodeJS with NestJS framework.
 
 Url: https://be-labs.onrender.com/
 
+| Lab  | tag                                                  |
+|------|------------------------------------------------------|
+| Lab1 | [lab-1](https://github.com/Alzex/be-labs/tree/lab-1) |
+
+
 ## Requirements
 - docker
 - docker-compose
