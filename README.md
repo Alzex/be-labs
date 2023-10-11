@@ -1,17 +1,27 @@
 # KPI BE Labs
 
-This projects runs on NodeJS with NestJS framework.
+This project runs on NodeJS with NestJS framework.
 
-| Lab  | Commit hash |
-|------|-------------|
-| Lab1 |             |
+Url: https://be-labs.onrender.com/
 
+## Requirements
+- docker
+- docker-compose
 
-## How to run
+## How to run locally
+Clone the repository:
 ```bash
-git clone 
+git clone git@github.com:Alzex/be-labs.git
+```
 
-docker-compose up
+Go to the project directory:
+```bash
+cd be-labs
+```
+
+Run the project with `docker-compose`:
+```bash
+docker-compose up --build
 ```
 
 Created by Zemlianskyi Oleksandr IM-13
