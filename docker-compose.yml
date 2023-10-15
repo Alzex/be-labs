@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-  # Docker hub: https://hub.docker.com/r/aiogram/telegram-bot-api
   be-labs:
     container_name: be-labs
     restart: on-failure

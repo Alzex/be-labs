@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { UserDto } from './dto/user.dto';
+import { User } from './models/user.model';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -15,22 +15,22 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number): UserDto {
-    return this.userService.getUser(id);
+  getUser(@Param('id', ParseIntPipe) id: number): User {
+    return this.userService.findOneById(id);
   }
 
   @Get()
-  getUsers(): UserDto[] {
-    return this.userService.getUsers();
+  getUsers(): User[] {
+    return this.userService.findAll();
   }
 
   @Post()
-  createUser(@Body() data: CreateUserDto): UserDto {
-    return this.userService.createUser(data);
+  createUser(@Body() data: CreateUserDto): User {
+    return this.userService.createOne(data);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): UserDto {
-    return this.userService.deleteUser(id);
+  deleteUser(@Param('id', ParseIntPipe) id: number): User {
+    return this.userService.deleteOneById(id);
   }
 }
