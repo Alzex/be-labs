@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { User } from '../user/models/user.model';
-import { CreateUserDto } from '../user/dto/create-user.dto';
+import { Category } from './models/category.model';
+import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Controller('category')
 export class CategoryController {
@@ -17,21 +18,21 @@ export class CategoryController {
 
   @Get(':id')
   getUser(@Param('id', ParseIntPipe) id: number): User {
-    return this.categoryService.findOneById(id);
+    return this.categoryService.findOneByIdOrFail(id);
   }
 
   @Get()
-  getUsers(): User[] {
+  getUsers(): Category[] {
     return this.categoryService.findAll();
   }
 
   @Post()
-  createUser(@Body() data: CreateUserDto): User {
+  createUser(@Body() data: CreateCategoryDto): Category {
     return this.categoryService.createOne(data);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): User {
+  deleteUser(@Param('id', ParseIntPipe) id: number): Category {
     return this.categoryService.deleteOneById(id);
   }
 }

@@ -16,7 +16,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get(':id')
   getUser(@Param('id', ParseIntPipe) id: number): User {
-    return this.userService.findOneById(id);
+    return this.userService.findOneByIdOrFail(id);
   }
 
   @Get()

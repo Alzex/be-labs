@@ -22,7 +22,11 @@ export class LocalCrudService<Model extends { id: number }> {
   }
 
   findOneById(id: number): Model {
-    const model = this.models.get(id);
+    return this.models.get(id);
+  }
+
+  findOneByIdOrFail(id: number): Model {
+    const model = this.findOneById(id);
 
     if (!model) {
       throw new NotFoundException(`${this.model.name} with id ${id} not found`);

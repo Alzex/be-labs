@@ -1,4 +1,7 @@
 export class Record {
   id: number;
-  name: string;
+  userId: number;
+  categoryId: number;
+  amount: number;
+  createdAt: Date;
 }
