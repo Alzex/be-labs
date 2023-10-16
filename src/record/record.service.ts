@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './models/user.model';
 import { LocalCrudService } from '../common/local-crud.service';
+import { Record } from './models/record.model';
 
 @Injectable()
-export class UserService extends LocalCrudService<User> {
+export class RecordService extends LocalCrudService<Record> {
   constructor() {
-    super(User);
+    super(Record);
   }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './models/user.model';
 import { LocalCrudService } from '../common/local-crud.service';
+import { Category } from './models/category.model';
 
 @Injectable()
-export class UserService extends LocalCrudService<User> {
+export class CategoryService extends LocalCrudService<Category> {
   constructor() {
-    super(User);
+    super(Category);
   }
 }
