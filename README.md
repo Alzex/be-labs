@@ -7,6 +7,7 @@ Url: https://be-labs.onrender.com/
 | Lab  | tag                                                  |
 |------|------------------------------------------------------|
 | Lab1 | [lab-1](https://github.com/Alzex/be-labs/tree/lab-1) |
+| Lab2 | [lab-2](https://github.com/Alzex/be-labs/tree/lab-2) |
 
 
 ## Requirements
