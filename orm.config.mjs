@@ -11,4 +11,9 @@ export default new DataSource({
   migrations: ['./src/migrations/**/*{.ts,.js}'],
   migrationsTableName: 'typeorm_migrations',
   synchronize: true,
+  extra: {
+    ssl: {
+      enabled: process.env.NODE_ENV === 'prod',
+    }
+  }
 });

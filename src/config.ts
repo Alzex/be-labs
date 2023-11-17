@@ -12,5 +12,10 @@ export const config = {
     migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
     migrationsTableName: 'typeorm_migrations',
     synchronize: true,
+    extra: {
+      ssl: {
+        enabled: process.env.NODE_ENV === 'prod',
+      },
+    },
   } as TypeOrmModuleOptions,
 };
