@@ -7,30 +7,30 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { User } from './models/user.model';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number): User {
+  getUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
     return this.userService.findOneByIdOrFail(id);
   }
 
   @Get()
-  getUsers(): User[] {
+  getUsers(): Promise<UserDto[]> {
     return this.userService.findAll();
   }
 
   @Post()
-  createUser(@Body() data: CreateUserDto): User {
+  createUser(@Body() data: CreateUserDto): Promise<UserDto> {
     return this.userService.createOne(data);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): User {
+  deleteUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
     return this.userService.deleteOneById(id);
   }
 }

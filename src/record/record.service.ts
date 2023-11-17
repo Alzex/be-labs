@@ -1,26 +1,66 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { LocalCrudService } from '../common/local-crud.service';
-import { Record } from './models/record.model';
-import { CategoryService } from '../category/category.service';
-import { UserService } from '../user/user.service';
+import { Record } from './entities/record.entity';
 import { CreateRecordDto } from './dto/create-record.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RecordDto } from './dto/record.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { FindRecordArgs } from './args/find-record.args';
 
 @Injectable()
-export class RecordService extends LocalCrudService<Record> {
+export class RecordService {
   constructor(
-    private readonly userService: UserService,
-    private readonly categoryService: CategoryService,
-  ) {
-    super(Record);
+    @InjectRepository(Record)
+    private readonly recordRepository: Repository<Record>,
+  ) {}
+  async findOneByIdOrFail(id: number): Promise<RecordDto> {
+    const result = await this.recordRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['user', 'category'],
+    });
+
+    if (!result) {
+      throw new NotFoundException('Record not found');
+    }
+
+    return RecordDto.fromEntity(result);
   }
 
-  createOne(data: CreateRecordDto): Record {
-    // Check if the user and category exist
-    this.userService.findOneByIdOrFail(data.userId);
-    this.categoryService.findOneByIdOrFail(data.categoryId);
+  async createOne(data: CreateRecordDto): Promise<RecordDto> {
+    const record = this.recordRepository.create(data);
 
-    data.createdAt = new Date();
+    await this.recordRepository.save(record);
 
-    return super.createOne(data);
+    return RecordDto.fromEntity(record);
+  }
+
+  async findMany(args: FindRecordArgs): Promise<RecordDto[]> {
+    const records = await this.recordRepository.find({
+      where: {
+        userId: args.userId,
+        categoryId: args.categoryId,
+      },
+      relations: ['user', 'category'],
+    });
+
+    return records.map((record) => RecordDto.fromEntity(record));
+  }
+
+  async deleteOneById(id: number): Promise<RecordDto> {
+    const record = await this.recordRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['user', 'category'],
+    });
+
+    if (!record) {
+      throw new NotFoundException('Record not found');
+    }
+
+    await this.recordRepository.remove(record);
+
+    return RecordDto.fromEntity(record);
   }
 }

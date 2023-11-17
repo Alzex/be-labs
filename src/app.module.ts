@@ -3,9 +3,16 @@ import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { RecordModule } from './record/record.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { config } from './config';
 
 @Module({
-  imports: [UserModule, CategoryModule, RecordModule],
+  imports: [
+    TypeOrmModule.forRoot(config.db),
+    UserModule,
+    CategoryModule,
+    RecordModule,
+  ],
   controllers: [AppController],
 })
 export class AppModule {}

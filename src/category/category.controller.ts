@@ -8,31 +8,30 @@ import {
   Post,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { User } from '../user/models/user.model';
-import { Category } from './models/category.model';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { CategoryDto } from './dto/category.dto';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number): User {
+  getCategory(@Param('id', ParseIntPipe) id: number): Promise<CategoryDto> {
     return this.categoryService.findOneByIdOrFail(id);
   }
 
   @Get()
-  getUsers(): Category[] {
+  getCategories(): Promise<CategoryDto[]> {
     return this.categoryService.findAll();
   }
 
   @Post()
-  createUser(@Body() data: CreateCategoryDto): Category {
+  createCategory(@Body() data: CreateCategoryDto): Promise<CategoryDto> {
     return this.categoryService.createOne(data);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): Category {
+  deleteCategory(@Param('id', ParseIntPipe) id: number): Promise<CategoryDto> {
     return this.categoryService.deleteOneById(id);
   }
 }
