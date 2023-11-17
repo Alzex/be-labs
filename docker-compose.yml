@@ -1,9 +1,32 @@
 version: "3.3"
 
 services:
+  db:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass123321
+      POSTGRES_DB: postgres
+    networks:
+        - db-network
+
   be-labs:
     container_name: be-labs
     restart: on-failure
+    env_file:
+      - .env
     build:
         context: .
         dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - db-network
+
+networks:
+    db-network:
+        driver: bridge
