@@ -6,6 +6,7 @@ export class RecordDto {
   categoryId: number;
   amount: number;
   createdAt: Date;
+  currencyId?: number;
 
   static fromEntity(entity: Record): RecordDto {
     const dto = new RecordDto();
@@ -14,6 +15,7 @@ export class RecordDto {
     dto.categoryId = entity.categoryId;
     dto.amount = entity.amount;
     dto.createdAt = entity.createdAt;
+    dto.currencyId = entity.currencyId;
     return dto;
   }
 }

@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Category } from '../../category/entities/category.entity';
+import { Currency } from '../../currency/entities/currency.entity';
 
 @Entity()
 export class Record {
@@ -36,4 +37,10 @@ export class Record {
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
+
+  @ManyToOne(() => Currency)
+  currency: Currency;
+
+  @Column({ nullable: true })
+  currencyId: number;
 }

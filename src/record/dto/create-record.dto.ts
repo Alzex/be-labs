@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, Min } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, Min } from 'class-validator';
 
 export class CreateRecordDto {
   @IsInt()
@@ -12,5 +12,11 @@ export class CreateRecordDto {
   @IsNumber()
   amount: number;
 
-  createdAt: Date;
+  @IsOptional()
+  @IsInt()
+  currencyId?: number;
+
+  @IsOptional()
+  @IsInt()
+  ownerId?: number;
 }

@@ -3,51 +3,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import { BasicCrudService } from '../common/basic-crud.service';
 
 @Injectable()
-export class UserService {
+export class UserService extends BasicCrudService<User> {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {}
-
-  async findAll(): Promise<UserDto[]> {
-    const users = await this.userRepository.find();
-    return users.map(UserDto.fromEntity);
+    protected readonly userRepository: Repository<User>,
+  ) {
+    super(userRepository);
   }
 
   async findOneByIdOrFail(id: number): Promise<UserDto> {
-    const user = await this.userRepository.findOne({
-      where: {
+    const user = await this.findOne(
+      {
         id,
       },
-    });
+      {
+        defaultCurrency: true,
+        personalCategories: true,
+      },
+    );
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
     return UserDto.fromEntity(user);
-  }
-
-  async createOne(data: CreateUserDto): Promise<UserDto> {
-    const user = this.userRepository.create(data);
-
-    await this.userRepository.save(user);
-
-    return UserDto.fromEntity(user);
-  }
-
-  async deleteOneById(id: number): Promise<UserDto> {
-    const user = await this.findOneByIdOrFail(id);
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    await this.userRepository.delete(id);
-
-    return user;
   }
 }

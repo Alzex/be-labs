@@ -17,7 +17,7 @@ export class RecordController {
 
   @Post()
   createRecord(@Body() dto: CreateRecordDto) {
-    return this.recordService.createOne(dto);
+    return this.recordService.createFromDto(dto);
   }
 
   @Get(':id')
@@ -27,7 +27,7 @@ export class RecordController {
 
   @Get()
   getRecords(@Query() args: FindRecordArgs) {
-    return this.recordService.findMany(args);
+    return this.recordService.findManyArgs(args);
   }
 
   @Delete(':id')

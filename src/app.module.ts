@@ -5,6 +5,7 @@ import { CategoryModule } from './category/category.module';
 import { RecordModule } from './record/record.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from './config';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { config } from './config';
     UserModule,
     CategoryModule,
     RecordModule,
+    CurrencyModule,
   ],
   controllers: [AppController],
 })

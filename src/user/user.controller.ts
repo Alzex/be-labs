@@ -21,7 +21,10 @@ export class UserController {
 
   @Get()
   getUsers(): Promise<UserDto[]> {
-    return this.userService.findAll();
+    return this.userService.findAll({
+      defaultCurrency: true,
+      personalCategories: true,
+    });
   }
 
   @Post()
@@ -31,6 +34,8 @@ export class UserController {
 
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
-    return this.userService.deleteOneById(id);
+    return this.userService.deleteOne({
+      id,
+    });
   }
 }

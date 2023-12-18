@@ -4,19 +4,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoryDto } from './dto/category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { BasicCrudService } from '../common/basic-crud.service';
 
 @Injectable()
-export class CategoryService {
+export class CategoryService extends BasicCrudService<Category> {
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
-  ) {}
+  ) {
+    super(categoryRepository);
+  }
 
   async findOneByIdOrFail(id: number): Promise<CategoryDto> {
-    const result = await this.categoryRepository.findOne({
-      where: {
-        id,
-      },
+    const result = await this.findOne({
+      id,
     });
 
     if (!result) {
@@ -26,32 +27,28 @@ export class CategoryService {
     return CategoryDto.fromEntity(result);
   }
 
-  async findAll(): Promise<CategoryDto[]> {
-    const categories = await this.categoryRepository.find();
+  async findAllDto(): Promise<CategoryDto[]> {
+    const categories = await this.findAll({
+      owner: true,
+    });
 
     return categories.map((category) => CategoryDto.fromEntity(category));
   }
 
-  async createOne(data: CreateCategoryDto): Promise<CategoryDto> {
-    const category = this.categoryRepository.create(data);
-
-    await this.categoryRepository.save(category);
+  async createOneFromDto(data: CreateCategoryDto): Promise<CategoryDto> {
+    const category = await this.createOne(data);
 
     return CategoryDto.fromEntity(category);
   }
 
   async deleteOneById(id: number): Promise<CategoryDto> {
-    const category = await this.categoryRepository.findOne({
-      where: {
-        id,
-      },
+    const category = await this.deleteOne({
+      id,
     });
 
     if (!category) {
       throw new NotFoundException('Category not found');
     }
-
-    await this.categoryRepository.remove(category);
 
     return CategoryDto.fromEntity(category);
   }
