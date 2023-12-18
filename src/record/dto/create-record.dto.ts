@@ -14,9 +14,11 @@ export class CreateRecordDto {
 
   @IsOptional()
   @IsInt()
+  @Min(1)
   currencyId?: number;
 
   @IsOptional()
   @IsInt()
+  @Min(1)
   ownerId?: number;
 }

@@ -8,7 +8,9 @@ export class UserDto {
 
   static fromEntity(entity: User): UserDto {
     return {
-      ...entity,
+      id: entity.id,
+      name: entity.name,
+      defaultCurrencyId: entity.defaultCurrency?.id,
       personalCategoriesIds:
         entity.personalCategories?.map((category) => category.id) ?? [],
     } as UserDto;

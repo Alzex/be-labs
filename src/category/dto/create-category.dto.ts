@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
 import { CategoryType } from '../enums/category-type.enum';
 
 export class CreateCategoryDto {
@@ -10,5 +10,6 @@ export class CreateCategoryDto {
 
   @IsOptional()
   @IsInt()
+  @Min(1)
   ownerId?: number;
 }

@@ -11,6 +11,8 @@ import {
 import { FindRecordArgs } from './args/find-record.args';
 import { UserService } from '../user/user.service';
 import { BasicCrudService } from '../common/basic-crud.service';
+import { CategoryService } from '../category/category.service';
+import { CategoryType } from '../category/enums/category-type.enum';
 
 @Injectable()
 export class RecordService extends BasicCrudService<Record> {
@@ -18,6 +20,7 @@ export class RecordService extends BasicCrudService<Record> {
     @InjectRepository(Record)
     protected readonly recordRepository: Repository<Record>,
     private readonly userService: UserService,
+    private readonly categoryService: CategoryService,
   ) {
     super(recordRepository);
   }
@@ -62,6 +65,24 @@ export class RecordService extends BasicCrudService<Record> {
         throw new BadRequestException(
           'currencyId is required or set default currency',
         );
+      }
+    }
+
+    if (data.categoryId) {
+      const category = await this.categoryService.findOne(
+        {
+          id: data.categoryId,
+        },
+        {
+          owner: true,
+        },
+      );
+
+      if (
+        category.type === CategoryType.PERSONAL &&
+        category.owner.id !== user.id
+      ) {
+        throw new BadRequestException('You cannot use this category');
       }
     }
 
