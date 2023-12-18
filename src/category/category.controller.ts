@@ -22,12 +22,12 @@ export class CategoryController {
 
   @Get()
   getCategories(): Promise<CategoryDto[]> {
-    return this.categoryService.findAll();
+    return this.categoryService.findAllDto();
   }
 
   @Post()
   createCategory(@Body() data: CreateCategoryDto): Promise<CategoryDto> {
-    return this.categoryService.createOne(data);
+    return this.categoryService.createOneFromDto(data);
   }
 
   @Delete(':id')

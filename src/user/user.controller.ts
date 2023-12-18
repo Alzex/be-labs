@@ -21,21 +21,16 @@ export class UserController {
 
   @Get()
   getUsers(): Promise<UserDto[]> {
-    return this.userService.findAll({
-      defaultCurrency: true,
-      personalCategories: true,
-    });
+    return this.userService.findAllDto();
   }
 
   @Post()
   createUser(@Body() data: CreateUserDto): Promise<UserDto> {
-    return this.userService.createOne(data);
+    return this.userService.createOneFromDto(data);
   }
 
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
-    return this.userService.deleteOne({
-      id,
-    });
+    return this.userService.deleteOneById(id);
   }
 }
