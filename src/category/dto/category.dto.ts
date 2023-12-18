@@ -8,7 +8,9 @@ export class CategoryDto {
 
   static fromEntity(entity: Category): CategoryDto {
     return {
-      ...entity,
+      id: entity.id,
+      name: entity.name,
+      type: entity.type,
       ownerId: entity.owner?.id,
     } as CategoryDto;
   }
