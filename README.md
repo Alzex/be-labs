@@ -8,7 +8,9 @@ Url: https://be-labs.onrender.com/
 |------|------------------------------------------------------|
 | Lab1 | [lab-1](https://github.com/Alzex/be-labs/tree/lab-1) |
 | Lab2 | [lab-2](https://github.com/Alzex/be-labs/tree/lab-2) |
+| Lab3 | [lab-3](https://github.com/Alzex/be-labs/tree/lab-3) |
 
+_Lab3 variant_: 13 % 3 = 1
 
 ## Requirements
 - docker
