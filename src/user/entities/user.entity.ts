@@ -13,8 +13,25 @@ export class User {
   @Column({
     type: 'varchar',
     length: 255,
+    unique: true,
   })
   name: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    // backward compatible
+    default: 'old',
+  })
+  passwordHash: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    // backward compatible
+    default: 'old',
+  })
+  passwordSalt: string;
 
   @ManyToOne(() => Currency, (currency) => currency.id, { nullable: true })
   defaultCurrency?: Currency;

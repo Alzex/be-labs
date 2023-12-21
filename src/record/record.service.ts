@@ -13,6 +13,7 @@ import { UserService } from '../user/user.service';
 import { BasicCrudService } from '../common/basic-crud.service';
 import { CategoryService } from '../category/category.service';
 import { CategoryType } from '../category/enums/category-type.enum';
+import { UserMetadata } from '../auth/types/user-metadata.type';
 
 @Injectable()
 export class RecordService extends BasicCrudService<Record> {
@@ -42,8 +43,14 @@ export class RecordService extends BasicCrudService<Record> {
     return RecordDto.fromEntity(result);
   }
 
-  async createFromDto(data: CreateRecordDto): Promise<RecordDto> {
-    const record = this.recordRepository.create(data);
+  async createFromDto(
+    data: CreateRecordDto,
+    meta: UserMetadata,
+  ): Promise<RecordDto> {
+    const record = this.recordRepository.create({
+      ...data,
+      userId: meta.userId ?? data.userId,
+    });
 
     const user = await this.userService.findOne(
       {
@@ -59,7 +66,7 @@ export class RecordService extends BasicCrudService<Record> {
     }
 
     if (!data.currencyId) {
-      record.currencyId = user.defaultCurrency.id;
+      record.currencyId = user.defaultCurrency?.id;
 
       if (!record.currencyId) {
         throw new BadRequestException(

@@ -6,12 +6,15 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CurrencyService } from './currency.service';
 import { CurrencyDto } from './dto/currency.dto';
 import { CreateCurrencyDto } from './dto/create-currency.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 @Controller('currency')
+@UseGuards(AuthGuard)
 export class CurrencyController {
   constructor(private readonly currencyService: CurrencyService) {}
 

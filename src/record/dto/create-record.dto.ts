@@ -1,6 +1,7 @@
 import { IsInt, IsNumber, IsOptional, Min } from 'class-validator';
 
 export class CreateRecordDto {
+  @IsOptional()
   @IsInt()
   @Min(1)
   userId: number;
